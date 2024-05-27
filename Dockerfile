@@ -7,7 +7,8 @@ RUN apt update \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV WINEARCH=win64
+ENV WINEARCH=win64 \
+    WINEDEBUG=-all
 
 RUN winecfg
 
