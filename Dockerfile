@@ -1,15 +1,16 @@
+# Build on Apple Silicon chips: docker buildx build --platform=linux/x86_64
 FROM ubuntu:latest
 
-RUN dpkg --add-architecture i386 && \
-    apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wine-development && \
-    apt-get clean  && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt update \
+    && dpkg --add-architecture i386 \
+    && DEBIAN_FRONTEND=noninteractive apt install -y wine-stable \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV WINEARCH=win64 \
     WINEDEBUG=-all
-	
-RUN wineboot --init
+
+RUN winecfg
 
 VOLUME /opt/server
 WORKDIR /opt/server
